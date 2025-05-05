@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Water Bill Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .result {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .result p {
+            margin: 8px 0;
+        }
+        hr {
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Bill Generator</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Generate Bill</button>
+        </form>
+
+        {% if final_total %}
+        <div class="result">
+            <h2>Bill Breakdown:</h2>
+            <p>Slab 1 (0–20 units): {{ slab1_units|floatformat:2 }} units = ₹{{ cost1|floatformat:2 }}</p>
+            <p>Slab 2 (21–30 units): {{ slab2_units|floatformat:2 }} units = ₹{{ cost2|floatformat:2 }}</p>
+            <p>Slab 3 (31+ units): {{ slab3_units|floatformat:2 }} units = ₹{{ cost3|floatformat:2 }}</p>
+            <hr>
+            <p><strong>Subtotal:</strong> ₹{{ subtotal|floatformat:2 }}</p>
+            <p><strong>Sewer Charge:</strong>
+                {% if has_sewer %}
+                    30% of subtotal = ₹{{ sewer_charge|floatformat:2 }}
+                {% else %}
+                    No sewer connection
+                {% endif %}
+            </p>
+            <p><strong>Fixed Charges:</strong> ₹{{ fixed_charge }}</p>
+            <p><strong>Total for 1 Month:</strong> ₹{{ total_one_month|floatformat:2 }}</p>
+            <hr>
+            <h3>Total Bill for {{ months }} Month(s): ₹{{ final_total|floatformat:2 }}</h3>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
