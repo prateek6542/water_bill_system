@@ -23,7 +23,7 @@ def calculate_bill(units, has_sewer, months):
     sewer_charge = subtotal * 0.30 if has_sewer else 0
 
     # Fixed charge
-    fixed_charge = 110
+    # fixed_charge = 110
 
     # Total bill for 1 month
     total_one_month = subtotal + sewer_charge + fixed_charge
@@ -40,7 +40,7 @@ def calculate_bill(units, has_sewer, months):
         'cost3': cost3,
         'subtotal': subtotal,
         'sewer_charge': sewer_charge,
-        'fixed_charge': fixed_charge,
+        # 'fixed_charge': fixed_charge,
         'total_one_month': total_one_month,
         'months': months,
         'final_total': final_total,
