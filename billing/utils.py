@@ -26,7 +26,7 @@ def calculate_bill(units, has_sewer, months):
     # fixed_charge = 110
 
     # Total bill for 1 month
-    total_one_month = subtotal + sewer_charge + fixed_charge
+    total_one_month = subtotal + sewer_charge
 
     # Multiply by number of months
     final_total = total_one_month * months
